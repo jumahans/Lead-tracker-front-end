@@ -1,11 +1,21 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-const NavBar = () => {
+const NavBar = ({ onLogout }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path) => location.pathname === path;
+
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout(); // Let parent component handle logout logic
+    } else {
+      // Fallback: just navigate to home
+      navigate('/');
+    }
+  };
 
   return (
     <nav className="bg-black/40 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
@@ -61,11 +71,7 @@ const NavBar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <span className="text-sm text-gray-400">Welcome back!</span>
             <button
-              onClick={() => {
-                localStorage.removeItem('authToken');
-                localStorage.removeItem('refreshToken');
-                window.location.href = '/';
-              }}
+              onClick={handleLogout}
               className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
             >
               Logout
@@ -130,11 +136,7 @@ const NavBar = () => {
               <div className="pt-4 space-y-2 border-t border-white/10 mt-2">
                 <div className="px-3 py-2 text-sm text-gray-400">Welcome back!</div>
                 <button
-                  onClick={() => {
-                    localStorage.removeItem('authToken');
-                    localStorage.removeItem('refreshToken');
-                    window.location.href = '/';
-                  }}
+                  onClick={handleLogout}
                   className="block w-full text-center bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition-colors"
                 >
                   Logout

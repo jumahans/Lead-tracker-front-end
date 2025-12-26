@@ -1,11 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ProtectedRoute from './components/ProtectedRoute';
-import LandingPage from './pages/LandingPage';
-import Dashboard from './pages/Dashboard';
-import Leads from './pages/Leads';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/profile';
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LandingPage from "./pages/LandingPage";
+import Dashboard from "./pages/Dashboard";
+import Leads from "./pages/Leads";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/profile";
 
 function App() {
   return (
@@ -16,21 +16,21 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
-          <Route 
-            path="/dashboard" 
+          <Route
+            path="/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/leads" 
+          <Route
+            path="/leads"
             element={
               <ProtectedRoute>
                 <Leads />
               </ProtectedRoute>
-            } 
+            }
           />
         </Routes>
       </div>
