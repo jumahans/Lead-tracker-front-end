@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [hasFreelancerProfile, setHasFreelancerProfile] = useState(false);
   const [showProfileForm, setShowProfileForm] = useState(false);
   const [profileData, setProfileData] = useState({ skills: '' });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -75,53 +76,65 @@ const Dashboard = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <header className="bg-black/40 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-center py-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/50">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between py-3 sm:py-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/50">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                   </svg>
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                  <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                     LeadTracker
                   </h1>
-                  <p className="text-sm text-gray-400">Business Lead Management System</p>
+                  <p className="text-xs sm:text-sm text-gray-400 hidden sm:block">Business Lead Management System</p>
                 </div>
               </div>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden text-gray-300 hover:text-cyan-400 p-2"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {mobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
             </div>
           </div>
         </header>
 
         <nav className="bg-black/40 backdrop-blur-md border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center space-x-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div className={`${mobileMenuOpen ? 'block' : 'hidden'} lg:flex lg:justify-between lg:items-center py-4 lg:py-0 lg:h-16`}>
+              <div className="flex flex-col lg:flex-row lg:items-center space-y-4 lg:space-y-0 lg:space-x-8">
                 <button
                   onClick={() => setShowProfileForm(false)}
-                  className="text-gray-300 hover:text-cyan-400 transition-colors"
+                  className="text-gray-300 hover:text-cyan-400 transition-colors text-left lg:text-center"
                 >
                   Dashboard
                 </button> 
                 <button
                   onClick={() => navigate('/leads')}
-                  className="text-gray-300 hover:text-cyan-400 transition-colors"
+                  className="text-gray-300 hover:text-cyan-400 transition-colors text-left lg:text-center"
                 >
                   All Leads
                 </button>
                 <button
                   onClick={() => navigate('/profile')}
-                  className="text-gray-300 hover:text-cyan-400 transition-colors"
+                  className="text-gray-300 hover:text-cyan-400 transition-colors text-left lg:text-center"
                 >
                   Profile
                 </button>
               </div>
-              <div className="flex items-center space-x-4">
+              <div className="flex flex-col lg:flex-row lg:items-center space-y-4 lg:space-y-0 lg:space-x-4 mt-4 lg:mt-0">
                 <span className="text-sm text-gray-400">Welcome back!</span>
                 <button
                   onClick={handleLogout}
-                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors w-full lg:w-auto"
                 >
                   Logout
                 </button>
@@ -130,11 +143,11 @@ const Dashboard = () => {
           </div>
         </nav>
 
-        <div className="max-w-2xl mx-auto mt-16 p-8">
-          <div className="bg-white/5 backdrop-blur-sm rounded-xl shadow-lg p-8 border border-white/10">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-white mb-2">Complete Your Profile</h2>
-              <p className="text-gray-400">Tell us about your skills to get started with lead tracking</p>
+        <div className="max-w-2xl mx-auto mt-8 sm:mt-16 p-4 sm:p-8">
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl shadow-lg p-5 sm:p-8 border border-white/10">
+            <div className="text-center mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Complete Your Profile</h2>
+              <p className="text-sm sm:text-base text-gray-400">Tell us about your skills to get started with lead tracking</p>
             </div>
             
             <form className="space-y-6" onSubmit={handleProfileSubmit}>
@@ -147,11 +160,11 @@ const Dashboard = () => {
                   value={profileData.skills}
                   onChange={(e) => setProfileData({ ...profileData, skills: e.target.value })}
                   placeholder="e.g., Sales, Marketing, Web Development, Consulting, etc."
-                  className="appearance-none block w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg placeholder-gray-500 text-white focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
+                  className="appearance-none block w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg placeholder-gray-500 text-white focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 text-sm sm:text-base"
                   rows="4"
                   required
                 />
-                <p className="mt-2 text-sm text-gray-400">
+                <p className="mt-2 text-xs sm:text-sm text-gray-400">
                   Describe your skills and areas of expertise. This helps us personalize your experience.
                 </p>
               </div>
@@ -164,10 +177,10 @@ const Dashboard = () => {
                 {isLoading ? (
                   <div className="flex items-center justify-center space-x-2">
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>Creating Profile...</span>
+                    <span className="text-sm sm:text-base">Creating Profile...</span>
                   </div>
                 ) : (
-                  'Complete Profile & Start Tracking Leads'
+                  <span className="text-sm sm:text-base">Complete Profile & Start Tracking Leads</span>
                 )}
               </button>
             </form>
@@ -180,50 +193,62 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <header className="bg-black/40 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center py-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/50">
-                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-3 sm:py-4">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/50">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                   LeadTracker
                 </h1>
-                <p className="text-sm text-gray-400">Business Lead Management System</p>
+                <p className="text-xs sm:text-sm text-gray-400 hidden sm:block">Business Lead Management System</p>
               </div>
             </div>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden text-gray-300 hover:text-cyan-400 p-2"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {mobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
         </div>
       </header>
 
       <nav className="bg-black/40 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-8">
-              <button className="text-cyan-400 font-medium border-b-2 border-cyan-400 pb-1">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className={`${mobileMenuOpen ? 'block' : 'hidden'} lg:flex lg:justify-between lg:items-center py-4 lg:py-0 lg:h-16`}>
+            <div className="flex flex-col lg:flex-row lg:items-center space-y-4 lg:space-y-0 lg:space-x-8">
+              <button className="text-cyan-400 font-medium border-b-2 border-cyan-400 pb-1 text-left lg:text-center">
                 Dashboard
               </button>
               <button
                 onClick={() => navigate('/leads')}
-                className="text-gray-300 hover:text-cyan-400 transition-colors"
+                className="text-gray-300 hover:text-cyan-400 transition-colors text-left lg:text-center"
               >
                 All Leads
               </button>
               <button
                 onClick={() => navigate('/profile')}
-                className="text-gray-300 hover:text-cyan-400 transition-colors"
+                className="text-gray-300 hover:text-cyan-400 transition-colors text-left lg:text-center"
               >
                 Profile
               </button>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col lg:flex-row lg:items-center space-y-4 lg:space-y-0 lg:space-x-4 mt-4 lg:mt-0">
               <span className="text-sm text-gray-400">Welcome back!</span>
               <button
                 onClick={handleLogout}
-                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors w-full lg:w-auto"
               >
                 Logout
               </button>
@@ -232,22 +257,22 @@ const Dashboard = () => {
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-white mb-2">Business Lead Dashboard</h2>
-          <p className="text-gray-400">Search for businesses and track your leads</p>
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Business Lead Dashboard</h2>
+          <p className="text-sm sm:text-base text-gray-400">Search for businesses and track your leads</p>
         </div>
 
         <SearchForm onSearch={handleSearch} isLoading={isLoading} />
 
         {businesses.length > 0 && (
-          <div className="mt-8">
-            <h3 className="text-xl font-semibold text-white mb-4">
+          <div className="mt-6 sm:mt-8">
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">
               Found {businesses.length} Businesses
             </h3>
             
             <div className="bg-white/5 backdrop-blur-sm rounded-xl shadow-lg border border-white/10 overflow-hidden">
-              <div className="overflow-x-auto">
+              <div className="hidden md:block overflow-x-auto">
                 <table className="min-w-full divide-y divide-white/10">
                   <thead className="bg-white/5">
                     <tr>
@@ -314,6 +339,50 @@ const Dashboard = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              <div className="md:hidden divide-y divide-white/10">
+                {businesses.map((business, index) => (
+                  <div key={index} className="p-4 space-y-3">
+                    <div>
+                      <div className="text-sm font-medium text-white mb-1">{business.name}</div>
+                      {business.website && business.website !== 'N/A' && (
+                        <div className="text-xs text-gray-400">
+                          <a href={business.website} target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 break-all">
+                            {business.website}
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                    {(business.phone && business.phone !== 'N/A') || (business.email && business.email !== 'N/A') ? (
+                      <div>
+                        <div className="text-xs text-gray-400 mb-1">Contact:</div>
+                        {business.phone && business.phone !== 'N/A' && <div className="text-sm text-gray-300">{business.phone}</div>}
+                        {business.email && business.email !== 'N/A' && <div className="text-sm text-gray-300 break-all">{business.email}</div>}
+                      </div>
+                    ) : null}
+                    {business.address && (
+                      <div>
+                        <span className="text-xs text-gray-400">Location: </span>
+                        <span className="text-sm text-gray-300">{business.address}</span>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between pt-2">
+                      <div>
+                        <span className="text-xs text-gray-400">Rating: </span>
+                        <span className="text-sm text-gray-300">
+                          {business.rating && business.rating !== 'N/A' ? `${business.rating}/5` : 'N/A'}
+                        </span>
+                      </div>
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-white/10 text-gray-300">
+                        {business.call_status || 'Not Called'}
+                      </span>
+                    </div>
+                    <button className="w-full text-cyan-400 hover:text-cyan-300 transition-colors text-sm font-medium border border-cyan-400/30 rounded-lg py-2">
+                      Update Status
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
