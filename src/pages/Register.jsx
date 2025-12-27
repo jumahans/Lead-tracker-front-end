@@ -38,7 +38,12 @@ const Register = () => {
 
       console.log('User created:', userResponse);
 
-      // Step 2: Create freelancer profile
+      // Step 2: Save token if provided
+      if (userResponse.token) {
+        localStorage.setItem('authToken', userResponse.token);
+      }
+
+      // Step 3: Create freelancer profile
       try {
         await businessAPI.createFreelancer({
           user: userResponse.id,
@@ -47,12 +52,7 @@ const Register = () => {
       } catch (freelancerError) {
         console.error('Freelancer creation failed:', freelancerError);
         // User was created but freelancer profile failed
-        // Still proceed to save token and navigate
-      }
-
-      // Step 3: Save token if provided
-      if (userResponse.token) {
-        localStorage.setItem('authToken', userResponse.token);
+        // Still proceed to navigate
       }
 
       // Step 4: Navigate to dashboard

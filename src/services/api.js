@@ -10,22 +10,12 @@ const api = axios.create({
   },
 });
 
-// Add auth token to requests if available (except for public endpoints)
+// Add auth token to requests if available
 api.interceptors.request.use((config) => {
-  // List of public endpoints that don't need auth
-  const publicEndpoints = ['/api/token/', '/create-user/', '/freelancer-details/'];
-  
-  const isPublicEndpoint = publicEndpoints.some(endpoint => 
-    config.url?.includes(endpoint)
-  );
-  
-  if (!isPublicEndpoint) {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-  
   return config;
 });
 
@@ -113,6 +103,16 @@ export const businessAPI = {
       throw error;
     }
   },
+
+  // getCallStatus : async () =>{
+  //   try{
+  //     const response = await api.get('/call-status/');
+  //     return response.data;
+  //   } catch(error){
+  //     console.error('error fetching call status:', error);
+  //     throw error;
+  //   }
+  // },
 
   getProfileData: async() =>{
     try{
