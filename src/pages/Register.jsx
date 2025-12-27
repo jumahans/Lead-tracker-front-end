@@ -29,24 +29,43 @@ const Register = () => {
 
     setIsLoading(true);
     try {
+      // Step 1: Create user
       const userResponse = await businessAPI.createUser({
         username: formData.username,
         email: formData.email,
         password: formData.password
       });
 
-      await businessAPI.createFreelancer({
-        user: userResponse.id,
-        skills: formData.skills
-      });
+      console.log('User created:', userResponse);
 
+      // Step 2: Create freelancer profile
+      try {
+        await businessAPI.createFreelancer({
+          user: userResponse.id,
+          skills: formData.skills
+        });
+      } catch (freelancerError) {
+        console.error('Freelancer creation failed:', freelancerError);
+        // User was created but freelancer profile failed
+        // Still proceed to save token and navigate
+      }
+
+      // Step 3: Save token if provided
       if (userResponse.token) {
         localStorage.setItem('authToken', userResponse.token);
       }
 
+      // Step 4: Navigate to dashboard
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.error || 'Registration failed. Please try again.');
+      console.error('Registration error:', err);
+      // Show the actual error message from backend
+      const errorMessage = err.response?.data?.username?.[0] || 
+                          err.response?.data?.email?.[0] || 
+                          err.response?.data?.error || 
+                          err.response?.data?.message ||
+                          'Registration failed. Please try again.';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
