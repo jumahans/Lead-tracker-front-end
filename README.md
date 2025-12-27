@@ -1,4 +1,3 @@
-Let me draft two README.md files: one for the Front-end and one for the Back-end, including setup, env vars, scripts, and example API calls.## Front-end README (README.md) ✅
 
 LeadTracker — Front-end (React + Vite + Tailwind) 🚀
 Short description
